@@ -1,0 +1,22 @@
+[
+  {
+    "nama": "Wawan Setiawan",
+    "umur": 99,
+    "alamat": {
+      "jalan": "Jl. Capek AH",
+      "kota": "Kota Mati",
+      "provinsi": "Gak Tau"
+    },
+    "hobi": ["ngoding", "jogging kalcer"]
+  },
+  {
+    "nama": "Ferdinan Lubis",
+    "umur": 25,
+    "alamat": {
+      "jalan": "Jl. Cipto",
+      "kota": "Jakarta",
+      "provinsi": "DKI Jakarta"
+    },
+    "hobi": ["menulis", "makan"]
+  }
+]
