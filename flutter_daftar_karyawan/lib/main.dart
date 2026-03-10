@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       home: const MyHomePage(),
@@ -42,37 +42,123 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Daftar Karyawan"),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.pink, Colors.blue],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+        title: const Text(
+          "Daftar Karyawan",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
-      body: FutureBuilder<List<Karyawan>>(
-        future: _readJsonData(),
-        builder: (context, snapshot) {
-          //print('data =' + snapshot.hasData.toString());
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(snapshot.data![index].nama),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Umur : ${snapshot.data![index].umur}'),
-                      Text(
-                        'Alamat : ${snapshot.data![index].alamat.jalan} , ${snapshot.data![index].alamat.kota} , ${snapshot.data![index].alamat.provinsi}',
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.pink, Colors.blue],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: FutureBuilder<List<Karyawan>>(
+          future: _readJsonData(),
+          builder: (context, snapshot) {
+            //print('data =' + snapshot.hasData.toString());
+            if (snapshot.hasData) {
+              return ListView.builder(
+                padding: const EdgeInsets.all(16.0),
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  final karyawan = snapshot.data![index];
+                  return Card(
+                    color: Colors.white,
+                    margin: const EdgeInsets.only(bottom: 12.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      side: const BorderSide(
+                        color: Colors.blueGrey,
+                        width: 1.0,
                       ),
-                    ],
-                  ),
-                );
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Center(child: Text('${snapshot.error}'));
-          }
+                    ),
+                    elevation: 2.0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.primary,
+                            child: Text(
+                              karyawan.nama.isNotEmpty
+                                  ? karyawan.nama[0].toUpperCase()
+                                  : '?',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 16.0),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  karyawan.nama,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18.0,
+                                  ),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.cake,
+                                      size: 16.0,
+                                      color: Colors.blue,
+                                    ),
+                                    const SizedBox(width: 8.0),
+                                    Text('Umur: ${karyawan.umur}'),
+                                  ],
+                                ),
+                                const SizedBox(height: 8.0),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.location_on,
+                                      size: 16.0,
+                                      color: Colors.blue,
+                                    ),
+                                    const SizedBox(width: 8.0),
+                                    Expanded(
+                                      child: Text(
+                                        '${karyawan.alamat.jalan}, ${karyawan.alamat.kota}, ${karyawan.alamat.provinsi}',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            } else if (snapshot.hasError) {
+              return Center(child: Text('${snapshot.error}'));
+            }
 
-          return const Center(child: CircularProgressIndicator());
-        },
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }

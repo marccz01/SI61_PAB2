@@ -1,6 +1,6 @@
 [
   {
-    "nama": "Wawan Setiawan",
+    "nama": "Edi Setiawan",
     "umur": 99,
     "alamat": {
       "jalan": "Jl. Capek AH",
@@ -18,5 +18,15 @@
       "provinsi": "DKI Jakarta"
     },
     "hobi": ["menulis", "makan"]
+  },
+  {
+    "nama": "Nelson Marcelino",
+    "umur": 20,
+    "alamat": {
+      "jalan": "Jl. Ajah",
+      "kota": "Palembang",
+      "provinsi": "Sumatera Selatan"
+    },
+    "hobi": ["olahraga", "tidur"]
   }
 ]
