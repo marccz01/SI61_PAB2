@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_daftar_movie/screens/favorite_screen.dart';
 import 'package:flutter_daftar_movie/screens/home_screen.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const HomeScreen(),
+      home: const FavoriteScreen(),
     );
   }
 }
