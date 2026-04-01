@@ -1,22 +1,28 @@
 import 'dart:convert';
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter_daftar_movie/models/movie.dart';
 import 'package:flutter_daftar_movie/screens/detail_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({super.key});
-
+class FavoritScreen extends StatefulWidget {
+  const FavoritScreen({super.key});
 
   @override
-  State<FavoriteScreen> createState() => _FavoriteScreenState();
+  State<FavoritScreen> createState() => _FavoritScreenState();
 }
 
-
-class _FavoriteScreenState extends State<FavoriteScreen> {
+class _FavoritScreenState extends State<FavoritScreen> {
   List<Movie> _favoriteMovies = [];
- 
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavoriteMovies();
+  }
+
+
   Future<void> _loadFavoriteMovies() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //final List<String> favoriteMovieIds = prefs.getKeys().where((key) => key.startsWith('movie_')).toList();
@@ -42,46 +48,38 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     });
   }
 
-
- @override
-  void initState() {
-    super.initState();
-    _loadFavoriteMovies();
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Favorite Movies'),
-        ),
-        body: ListView.builder(
-          itemCount: _favoriteMovies.length,
-          itemBuilder: (context, index) {
-            final Movie movie = _favoriteMovies[index];
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: ListTile(
-                leading: Image.network(
-                  'https://image.tmdb.org/t/p/w500${movie.posterPath}',
-                  height: 50,
-                  width: 50,
-                  fit: BoxFit.cover,
-                ),
-                title: Text(movie.title),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailScreen(movie: movie),
-                    ),
-                  );
-                },
+      appBar: AppBar(
+        title: const Text('Favorit Movies'),
+      ),
+      body: ListView.builder(
+        itemCount: _favoriteMovies.length,
+        itemBuilder: (context, index) {
+          final movie = _favoriteMovies[index];
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              leading: Image.network(
+                'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                height: 50,
+                width: 50,
+                fit: BoxFit.cover,
               ),
-            );
-          },
-        ));
+              title: Text(movie.title),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailScreen(movie: movie),
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
   }
- 
 }
